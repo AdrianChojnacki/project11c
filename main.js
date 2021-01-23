@@ -1,44 +1,56 @@
 // Selectors
-const startBtn = document.querySelector(`.main`);
+const mainBtn = document.querySelector(`.main`);
 const resetBtn = document.querySelector(`.reset`);
 const timeDiv = document.querySelector(`.time`);
 
 // Functions variables
 let interval;
-let startTime;
 let time;
-let savedTime = 0;
+let seconds;
+let milliseconds;
+let savedSeconds = 0;
+let savedMilliseconds = 0;
 let flag = true;
 
 // Start-stop function
 const startStop = () => {
-  startTime = Date.now();
+  let startTime = Date.now();
 
   if (flag) {
     interval = setInterval(() => {
-      const nowTime = Date.now();
+      let nowTime = Date.now();
       time = nowTime - startTime;
-      timeDiv.textContent = savedTime + time;
+      seconds = Math.floor(time / 1000);
+      milliseconds = time % 1000;
+
+      mainBtn.textContent = "Stop";
+      timeDiv.textContent = `${savedSeconds + seconds}.${savedMilliseconds + milliseconds}`;
     }, 1);
 
     flag = !flag;
   } else {
     clearInterval(interval);
 
-    savedTime = savedTime + time;
+    savedSeconds += seconds;
+    savedMilliseconds += milliseconds;
+
+    mainBtn.textContent = "Start";
 
     flag = !flag;
   }
 };
 
 // Start-stop listener
-startBtn.addEventListener(`click`, startStop);
+mainBtn.addEventListener(`click`, startStop);
 
 // Reset function
 const reset = () => {
   clearInterval(interval);
 
-  savedTime = 0;
+  savedSeconds = 0;
+  savedMilliseconds = 0;
+
+  mainBtn.textContent = "Start";
   timeDiv.textContent = "---";
 
   flag = true;
