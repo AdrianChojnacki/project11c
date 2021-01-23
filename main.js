@@ -7,32 +7,28 @@ const timeDiv = document.querySelector(`.time`);
 let interval;
 let time;
 let seconds;
-let milliseconds;
-let savedSeconds = 0;
-let savedMilliseconds = 0;
+let savedTime = 0;
 let flag = true;
 
-// Start-stop function
-const startStop = () => {
+// Stopwatch function
+const stopwatch = () => {
   let startTime = Date.now();
 
   if (flag) {
     interval = setInterval(() => {
       let nowTime = Date.now();
       time = nowTime - startTime;
-      seconds = Math.floor(time / 1000);
-      milliseconds = time % 1000;
+      seconds = (time + savedTime) / 1000;
 
       mainBtn.textContent = "Stop";
-      timeDiv.textContent = `${savedSeconds + seconds}.${savedMilliseconds + milliseconds}`;
-    }, 1);
+      timeDiv.textContent = `${Math.round(seconds * 100) / 100}`;
+    }, 10);
 
     flag = !flag;
   } else {
     clearInterval(interval);
 
-    savedSeconds += seconds;
-    savedMilliseconds += milliseconds;
+    savedTime += time;
 
     mainBtn.textContent = "Start";
 
@@ -40,15 +36,14 @@ const startStop = () => {
   }
 };
 
-// Start-stop listener
-mainBtn.addEventListener(`click`, startStop);
+// Main listener
+mainBtn.addEventListener(`click`, stopwatch);
 
 // Reset function
 const reset = () => {
   clearInterval(interval);
 
-  savedSeconds = 0;
-  savedMilliseconds = 0;
+  savedTime = 0;
 
   mainBtn.textContent = "Start";
   timeDiv.textContent = "---";
