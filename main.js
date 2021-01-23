@@ -5,22 +5,27 @@ const timeDiv = document.querySelector(`.time`);
 
 // Functions variables
 let interval;
+let startTime;
 let time;
+let savedTime = 0;
 let flag = true;
 
 // Start-stop function
 const startStop = () => {
-  const startTime = Date.now();
+  startTime = Date.now();
+
   if (flag) {
     interval = setInterval(() => {
       const nowTime = Date.now();
       time = nowTime - startTime;
-      timeDiv.textContent = time;
+      timeDiv.textContent = savedTime + time;
     }, 1);
 
     flag = !flag;
   } else {
     clearInterval(interval);
+
+    savedTime = savedTime + time;
 
     flag = !flag;
   }
@@ -33,6 +38,7 @@ startBtn.addEventListener(`click`, startStop);
 const reset = () => {
   clearInterval(interval);
 
+  savedTime = 0;
   timeDiv.textContent = "---";
 
   flag = true;
