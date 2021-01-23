@@ -11,7 +11,7 @@ let savedTime = 0;
 let flag = true;
 
 // Stopwatch function
-const stopwatch = () => {
+const timer = () => {
   let startTime = Date.now();
 
   if (flag) {
@@ -21,7 +21,7 @@ const stopwatch = () => {
       seconds = (time + savedTime) / 1000;
 
       mainBtn.textContent = "Stop";
-      timeDiv.textContent = `${Math.round(seconds * 100) / 100}`;
+      timeDiv.textContent = `${(Math.round(seconds * 100) / 100).toFixed(2)}`;
     }, 10);
 
     flag = !flag;
@@ -37,7 +37,7 @@ const stopwatch = () => {
 };
 
 // Main listener
-mainBtn.addEventListener(`click`, stopwatch);
+mainBtn.addEventListener(`click`, timer);
 
 // Reset function
 const reset = () => {
