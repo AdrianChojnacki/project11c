@@ -21,7 +21,7 @@ const timer = () => {
       seconds = (time + savedTime) / 1000;
 
       mainBtn.textContent = "Stop";
-      timeDiv.textContent = `${(Math.round(seconds * 100) / 100).toFixed(2)}`;
+      timeDiv.textContent = `${seconds.toFixed(2)}`;
     }, 10);
 
     flag = !flag;
